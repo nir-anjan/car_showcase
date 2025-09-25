@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary-blue: #2b59ff;
+  --color-primary-blue-100: #f5f8ff;
+  --color-secondary-orange: #f79761;
+  --color-secondary-orange-light-white: rgba(59, 60, 152, 0.03);
+  --color-secondary-orange-light-white-100: rgba(59, 60, 152, 0.02);
+
+  --background-container-hero-bg: "url('/hero-bg.png')";
+  --background-container-pattern: "url('/pattern.png')";
+}
