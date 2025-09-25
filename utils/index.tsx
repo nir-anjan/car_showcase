@@ -46,34 +46,40 @@ export const deleteSearchParams = (type: string) => {
 export async function fetchCars(filters: FilterProps) {
   const { manufacturer, year, model, limit, fuel } = filters;
 
-  // Set the required headers for the API request
-  const headers: HeadersInit = {
-    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY || "",
-    "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-  };
+  try {
+    // Build query parameters for our API route
+    const searchParams = new URLSearchParams({
+      manufacturer: manufacturer || "",
+      year: year?.toString() || "2022",
+      model: model || "",
+      limit: limit?.toString() || "10",
+      fuel: fuel || "",
+    });
 
-  // Set the required headers for the API request
-  const response = await fetch(
-    `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
-    {
-      headers: headers,
+    // Call our internal API route instead of RapidAPI directly
+    const response = await fetch(`/api/cars?${searchParams.toString()}`);
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
     }
-  );
 
-  // Parse the response as JSON
-  const result = await response.json();
-
-  return result;
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    return { error: "Failed to fetch cars data" };
+  }
 }
 
 export const generateCarImageUrl = (car: CarProps, angle?: string) => {
   const url = new URL("https://cdn.imagin.studio/getimage");
   const { make, model, year } = car;
 
-  url.searchParams.append(
-    "customer",
-    process.env.NEXT_PUBLIC_IMAGIN_API_KEY || ""
-  );
+  // Use a default or fallback if no API key is available
+  const imaginApiKey =
+    process.env.NEXT_PUBLIC_IMAGIN_API_KEY || "hrjavascript-mastery";
+
+  url.searchParams.append("customer", imaginApiKey);
   url.searchParams.append("make", make);
   url.searchParams.append("modelFamily", model.split(" ")[0]);
   url.searchParams.append("zoomType", "fullscreen");
