@@ -12,3 +12,12 @@
   --background-container-hero-bg: "url('/hero-bg.png')";
   --background-container-pattern: "url('/pattern.png')";
 }
+
+/* Utility to hide native scrollbars while preserving scrolling behaviour */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

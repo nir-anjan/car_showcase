@@ -1,7 +1,9 @@
 import { MouseEventHandler } from "react";
 
 export interface CarProps {
-  city_mpg: number;
+  // Some APIs may return a string message for MPG for non-premium subscribers.
+  // Accept either a number or a string to reflect that possibility.
+  city_mpg: number | string;
   class: string;
   combination_mpg: number;
   cylinders: number;
