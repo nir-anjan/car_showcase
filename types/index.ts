@@ -26,7 +26,8 @@ export interface FilterProps {
 }
 
 export interface HomeProps {
-  searchParams: FilterProps;
+  // In Next.js 15+, searchParams must be a Promise to be compatible with PageProps
+  searchParams?: Promise<FilterProps>;
 }
 
 export interface CarCardProps {
