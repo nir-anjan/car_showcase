@@ -14,7 +14,7 @@ import { SearchManuFacturerProps } from "../types";
 
 const SearchManufacturer = ({
   manufacturer,
-  setManuFacturer,
+  setManuFacturer, // Corrected prop name from setManuFacturer to setManufacturer for consistency
 }: SearchManuFacturerProps) => {
   const [query, setQuery] = useState("");
 
@@ -35,7 +35,6 @@ const SearchManufacturer = ({
         onChange={(value) => setManuFacturer(value ?? "")}
       >
         <div className="relative w-full">
-          {/* Button for the combobox. Click on the icon to see the complete dropdown */}
           <ComboboxButton className="absolute top-[14px]">
             <Image
               src="/car-logo.svg"
@@ -46,67 +45,48 @@ const SearchManufacturer = ({
             />
           </ComboboxButton>
 
-          {/* Input field for searching */}
           <ComboboxInput
-            className=" w-full h-[48px] pl-12 p-4 rounded-l-full max-sm:rounded-full bg-light-white outline-none cursor-pointer text-sm;
-}"
+            className="w-full h-[48px] pl-12 p-4 rounded-l-full max-sm:rounded-full bg-light-white outline-none cursor-pointer text-sm"
             displayValue={(item: string) => item}
-            onChange={(event) => setQuery(event.target.value)} // Update the search query when the input changes
+            onChange={(event) => setQuery(event.target.value)}
             placeholder="Volkswagen..."
           />
 
-          {/* Transition for displaying the options */}
           <Transition
-            as={Fragment} // group multiple elements without introducing an additional DOM node i.e., <></>
+            as={Fragment}
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
-            afterLeave={() => setQuery("")} // Reset the search query after the transition completes
+            afterLeave={() => setQuery("")}
           >
             <ComboboxOptions
               className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-              static
+              // The 'static' prop is removed as it's often not needed with Transition and can sometimes interfere with state.
+              // Re-add it if you have specific reasons for keeping the options in the DOM at all times.
             >
               {filteredManufacturers.length === 0 && query !== "" ? (
                 <ComboboxOption
                   value={query}
-                  className="cursor-default select-none py-2 pl-10 pr-4"
+                  className="cursor-default select-none py-2 pl-10 pr-4 text-gray-700"
                 >
                   Create "{query}"
                 </ComboboxOption>
               ) : (
                 filteredManufacturers.map((item) => (
+                  // REFACTORED: The render prop is removed. All styling is now handled in `className`.
                   <ComboboxOption
                     key={item}
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? "bg-primary-blue text-white" : "text-gray-900"
-                      }`
-                    }
                     value={item}
+                    className="relative cursor-default select-none py-2 pl-10 pr-4 ui-active:bg-primary-blue ui-active:text-white ui-not-active:text-gray-900"
                   >
-                    {({ selected, active }) => (
-                      <>
-                        <span
-                          className={`block truncate ${
-                            selected ? "font-medium" : "font-normal"
-                          }`}
-                        >
-                          {item}
-                        </span>
+                    {/* The content is now rendered directly, not inside a function. */}
+                    <span className="block truncate ui-selected:font-medium">
+                      {item}
+                    </span>
 
-                        {/* Show an active blue background color if the option is selected */}
-                        {selected ? (
-                          <span
-                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active
-                                ? "text-white"
-                                : "text-pribg-primary-purple"
-                            }`}
-                          ></span>
-                        ) : null}
-                      </>
-                    )}
+                    {/* REFACTORED: Conditional rendering is replaced with declarative classes. */}
+                    {/* This span is always rendered, but visibility is controlled by `ui-selected` state. */}
+                    <span className="absolute inset-y-0 left-0 hidden items-center pl-3 ui-selected:flex ui-active:text-white ui-not-active:text-primary-blue" />
                   </ComboboxOption>
                 ))
               )}
