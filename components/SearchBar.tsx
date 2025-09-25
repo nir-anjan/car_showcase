@@ -62,7 +62,7 @@ const SearchBar = () => {
 
   return (
     <form
-      className="flex items-center justify-start max-sm:flex-col w-full relative max-sm:gap-4 max-w-3xl"
+      className="flex items-center justify-start max-sm:flex-col w-full relative max-sm:gap-4 max-w-[600px]"
       onSubmit={handleSearch}
     >
       <div className=" flex-1 max-sm:w-full flex justify-start items-center relative">
@@ -72,7 +72,7 @@ const SearchBar = () => {
         />
         <SearchButton otherClasses="sm:hidden" />
       </div>
-      <div className=" flex-1 max-sm:w-full flex justify-start items-center relative">
+      {/* <div className=" flex-1 max-sm:w-full flex justify-start items-center relative">
         <Image
           src="/model-icon.png"
           width={25}
@@ -89,7 +89,7 @@ const SearchBar = () => {
           className=" w-full h-[48px] pl-12 p-4 bg-light-white rounded-r-full max-sm:rounded-full outline-none cursor-pointer text-sm"
         />
         <SearchButton otherClasses="sm:hidden" />
-      </div>
+      </div> */}
       <SearchButton otherClasses="max-sm:hidden" />
     </form>
   );

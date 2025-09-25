@@ -46,7 +46,7 @@ const SearchManufacturer = ({
           </ComboboxButton>
 
           <ComboboxInput
-            className="w-full h-[48px] pl-12 p-4 rounded-l-full max-sm:rounded-full bg-light-white outline-none cursor-pointer text-sm"
+            className="w-full h-[48px] pl-12 p-4 rounded-l-full max-sm:rounded-full bg-blue-200 outline-none cursor-pointer text-sm"
             displayValue={(item: string) => item}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Volkswagen..."
